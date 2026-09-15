@@ -147,22 +147,23 @@ const { title = "Mona's Bookmark Manager App" } = Astro.props;
       .hint { margin: 0 0 1.5rem; font-size: 0.8rem; color: var(--muted); }
 
       #list-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        display: grid;
+        justify-items: center;
         gap: 0.75rem;
+        text-align: center;
         margin: 0 0 0.75rem;
       }
       .list-title { margin: 0; font-size: 1rem; font-family: var(--font-head); }
       .clear {
-        background: transparent;
-        color: inherit;
-        border: 1px solid var(--border);
-        padding: 0.35rem 0.7rem;
-        font-size: 0.8rem;
-        font-weight: 500;
+        background: #fff;
+        color: #2563eb;
+        border: 1px solid color-mix(in srgb, #2563eb 28%, transparent);
+        padding: 0.75rem 1.4rem;
+        font-size: 1rem;
+        font-weight: 700;
+        box-shadow: 0 0.75rem 1.75rem color-mix(in srgb, #2563eb 18%, transparent);
       }
-      .clear:hover { border-color: currentColor; }
+      .clear:hover { border-color: #2563eb; filter: brightness(1); }
 
       ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
       li.bookmark {
