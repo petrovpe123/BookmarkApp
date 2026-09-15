@@ -49,49 +49,95 @@ const { title = "Mona's Bookmark Manager App" } = Astro.props;
       }
       :root {
         color-scheme: light dark;
-        --accent: #3b82f6;
-        --border: #8883;
+        --accent: #8b5cf6;
+        --accent-strong: #6d28d9;
+        --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
+        --surface: color-mix(in srgb, Canvas 92%, var(--accent) 8%);
+        --surface-raised: color-mix(in srgb, Canvas 96%, var(--accent) 4%);
+        --border: color-mix(in srgb, currentColor 16%, transparent);
         --muted: color-mix(in srgb, currentColor 60%, transparent);
-        --radius: 0.6rem;
+        --shadow: 0 1.5rem 4rem color-mix(in srgb, #111827 18%, transparent);
+        --radius: 1rem;
         --font-body: 'Monaspace Neon', ui-monospace, 'SF Mono', 'Cascadia Code', monospace;
         --font-head: 'Monaspace Xenon', 'Monaspace Neon', ui-monospace, monospace;
       }
       * { box-sizing: border-box; }
+      [hidden] { display: none !important; }
       body {
         font-family: var(--font-body);
         line-height: 1.5;
-        max-width: 40rem;
+        max-width: 48rem;
         margin: 0 auto;
         padding: 2.5rem 1.25rem 4rem;
+        background:
+          radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 28%, transparent), transparent 18rem),
+          linear-gradient(135deg, color-mix(in srgb, Canvas 94%, var(--accent) 6%), Canvas);
+        color: CanvasText;
       }
-      header { margin-bottom: 1.5rem; }
-      h1 { margin: 0 0 0.25rem; font-size: 1.75rem; font-family: var(--font-head); letter-spacing: -0.01em; }
+      header { margin-bottom: 1.5rem; text-align: center; }
+      h1 { margin: 0 0 0.35rem; font-size: clamp(2rem, 8vw, 4rem); line-height: 0.95; font-family: var(--font-head); letter-spacing: -0.05em; }
+      h2 { font-family: var(--font-head); letter-spacing: -0.03em; }
       .tagline { margin: 0; color: var(--muted); }
+      code {
+        padding: 0.08rem 0.28rem;
+        border-radius: 0.35rem;
+        background: var(--accent-soft);
+      }
+
+      .bookmark-card,
+      .saved-card {
+        border: 1px solid var(--border);
+        border-radius: calc(var(--radius) + 0.35rem);
+        background: var(--surface);
+        box-shadow: var(--shadow);
+      }
+      .bookmark-card {
+        padding: clamp(1rem, 4vw, 1.5rem);
+      }
+      .saved-card {
+        margin-top: 1rem;
+        padding: 1rem;
+      }
+      .card-copy {
+        margin-bottom: 1rem;
+      }
+      .card-copy h2 {
+        margin: 0 0 0.35rem;
+        font-size: clamp(1.35rem, 4vw, 2rem);
+      }
+      .card-copy p { margin: 0; color: var(--muted); }
+      .eyebrow {
+        color: var(--accent-strong) !important;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
 
       form {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
+        gap: 0.75rem;
         align-items: end;
-        margin: 1.5rem 0 0.5rem;
+        margin: 0 0 0.5rem;
       }
       .field { display: flex; flex-direction: column; gap: 0.35rem; flex: 1 1 16rem; }
       label { font-size: 0.85rem; font-weight: 600; }
       input {
-        padding: 0.6rem 0.7rem;
+        padding: 0.8rem 0.9rem;
         border: 1px solid var(--border);
         border-radius: var(--radius);
         font: inherit;
-        background: transparent;
+        background: var(--surface-raised);
         color: inherit;
       }
       input:focus-visible,
       button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
       button {
-        padding: 0.6rem 1rem;
+        padding: 0.8rem 1rem;
         border: 1px solid transparent;
         border-radius: var(--radius);
-        background: var(--accent);
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
         color: #fff;
         font: inherit;
         font-weight: 600;
@@ -105,7 +151,7 @@ const { title = "Mona's Bookmark Manager App" } = Astro.props;
         align-items: center;
         justify-content: space-between;
         gap: 0.75rem;
-        margin: 0.5rem 0;
+        margin: 0 0 0.75rem;
       }
       .list-title { margin: 0; font-size: 1rem; font-family: var(--font-head); }
       .clear {
@@ -127,14 +173,16 @@ const { title = "Mona's Bookmark Manager App" } = Astro.props;
         padding: 0.75rem 0.9rem;
         border: 1px solid var(--border);
         border-radius: var(--radius);
+        background: var(--surface-raised);
       }
-      .bookmark .url { flex: 1 1 12rem; overflow-wrap: anywhere; }
+      .bookmark-value { flex: 1 1 12rem; overflow-wrap: anywhere; }
+      .bookmark .url { color: inherit; }
       .bookmark .slug {
-        font-family: ui-monospace, "SF Mono", monospace;
+        font-family: var(--font-body);
         font-size: 0.85rem;
         padding: 0.15rem 0.5rem;
         border-radius: 999px;
-        background: color-mix(in srgb, var(--accent) 18%, transparent);
+        background: var(--accent-soft);
       }
       .bookmark .copy {
         background: transparent;
